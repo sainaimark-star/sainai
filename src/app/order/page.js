@@ -30,6 +30,18 @@ export default function OrderPage() {
     if (!photo) return alert("Add photo");
     if (!size) return alert("Choose size");
 
+    // ADDRESS BLOCKER
+    if (
+      !form.name ||
+      !form.email ||
+      !form.country ||
+      !form.city ||
+      !form.street ||
+      !form.zip
+    ) {
+      return alert("Please fill shipping address");
+    }
+
     setLoading(true);
 
     try {
@@ -37,9 +49,7 @@ export default function OrderPage() {
       data.append("photo", photo);
       data.append("size", size);
 
-      Object.entries(form).forEach(([k, v]) =>
-        data.append(k, v)
-      );
+      Object.entries(form).forEach(([k, v]) => data.append(k, v));
 
       await fetch("/api/send-photo", {
         method: "POST",
@@ -57,7 +67,7 @@ export default function OrderPage() {
       if (!res.url) throw new Error("Stripe error");
 
       window.location.href = res.url;
-    } catch (e) {
+    } catch {
       alert("Payment error");
       setLoading(false);
     }
@@ -66,18 +76,13 @@ export default function OrderPage() {
   return (
     <div style={page}>
       <div style={card}>
-
         <h2 style={title}>Order Portrait</h2>
 
-        {/* TRUST */}
-
         <div style={trust}>
-          ✔ Cancel your order within 24 hours — full refund guaranteed<br/>
-          ✔ I personally draw your portrait by hand<br/>
-          ✔ Final artwork shipped to your address
+          ✓ Cancel your order within 24 hours – full refund guaranteed<br />
+          ✓ I personally draw your portrait by hand<br />
+          ✓ Final artwork shipped to your address
         </div>
-
-        {/* PHOTO */}
 
         <label style={upload}>
           {preview ? (
@@ -91,50 +96,37 @@ export default function OrderPage() {
           <input hidden type="file" onChange={handlePhoto} />
         </label>
 
-        {/* SIZE */}
-
-        <select value={size} onChange={(e)=>setSize(e.target.value)} style={select}>
+        <select value={size} onChange={(e) => setSize(e.target.value)} style={select}>
           <option value="">Choose size</option>
-          <option value="A3">A3 — CHF 30</option>
-          <option value="A4">A4 — CHF 20</option>
+          <option value="A3">A3 – $30</option>
+          <option value="A4">A4 – $20</option>
         </select>
 
-        {/* ADDRESS BUTTON */}
-
-        <button style={addrBtn} onClick={()=>setShowAddress(!showAddress)}>
+        <button style={addrBtn} onClick={() => setShowAddress(!showAddress)}>
           Add shipping address
         </button>
 
-        {/* ADDRESS */}
-
         {showAddress && (
           <div style={addrWrap}>
-            <input style={input} placeholder="Full name" onChange={(e)=>setForm({...form,name:e.target.value})}/>
-            <input style={input} placeholder="Email" onChange={(e)=>setForm({...form,email:e.target.value})}/>
-            <input style={input} placeholder="Country" onChange={(e)=>setForm({...form,country:e.target.value})}/>
-            <input style={input} placeholder="City" onChange={(e)=>setForm({...form,city:e.target.value})}/>
-            <input style={input} placeholder="Street address" onChange={(e)=>setForm({...form,street:e.target.value})}/>
-            <input style={input} placeholder="ZIP / Postal code" onChange={(e)=>setForm({...form,zip:e.target.value})}/>
-            <textarea style={input} placeholder="Note (optional)" onChange={(e)=>setForm({...form,note:e.target.value})}/>
+            <input style={input} placeholder="Full name" onChange={(e) => setForm({ ...form, name: e.target.value })} />
+            <input style={input} placeholder="Email" onChange={(e) => setForm({ ...form, email: e.target.value })} />
+            <input style={input} placeholder="Country" onChange={(e) => setForm({ ...form, country: e.target.value })} />
+            <input style={input} placeholder="City" onChange={(e) => setForm({ ...form, city: e.target.value })} />
+            <input style={input} placeholder="Street address" onChange={(e) => setForm({ ...form, street: e.target.value })} />
+            <input style={input} placeholder="ZIP / Postal code" onChange={(e) => setForm({ ...form, zip: e.target.value })} />
+            <textarea style={input} placeholder="Note (optional)" onChange={(e) => setForm({ ...form, note: e.target.value })} />
           </div>
         )}
 
-        {/* PAY */}
-
-        <button
-          style={{...pay, opacity: loading ? 0.6 : 1}}
-          onClick={handleSubmit}
-          disabled={loading}
-        >
+        <button style={{ ...pay, opacity: loading ? 0.6 : 1 }} onClick={handleSubmit} disabled={loading}>
           {loading ? "Redirecting..." : "Pay & Order"}
         </button>
-
       </div>
     </div>
   );
 }
 
-/* ---------------- STYLE ---------------- */
+/* STYLE */
 
 const page = {
   minHeight: "100vh",
@@ -153,15 +145,9 @@ const card = {
   color: "white",
 };
 
-const title = {
-  textAlign: "center",
-};
+const title = { textAlign: "center" };
 
-const trust = {
-  fontSize: 13,
-  lineHeight: "1.6",
-  opacity: 0.85,
-};
+const trust = { fontSize: 13, lineHeight: "1.6", opacity: 0.85 };
 
 const upload = {
   border: "2px dashed #666",
@@ -170,15 +156,9 @@ const upload = {
   cursor: "pointer",
 };
 
-const img = {
-  width: "100%",
-  borderRadius: 6,
-};
+const img = { width: "100%", borderRadius: 6 };
 
-const check = {
-  marginTop: 6,
-  color: "#7CFF7C",
-};
+const check = { marginTop: 6, color: "#7CFF7C" };
 
 const select = {
   background: "#111",
