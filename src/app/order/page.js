@@ -27,51 +27,57 @@ export default function OrderPage() {
   }
 
   async function handleSubmit() {
-    if (!photo) return alert("Add photo");
-    if (!size) return alert("Choose size");
+  if (!photo) return alert("Add photo");
+  if (!size) return alert("Choose size");
 
-    // ADDRESS BLOCKER
-    if (
-      !form.name ||
-      !form.email ||
-      !form.country ||
-      !form.city ||
-      !form.street ||
-      !form.zip
-    ) {
-      return alert("Please fill shipping address");
-    }
-
-    setLoading(true);
-
-    try {
-      const data = new FormData();
-      data.append("photo", photo);
-      data.append("size", size);
-
-      Object.entries(form).forEach(([k, v]) => data.append(k, v));
-
-      await fetch("/api/send-photo", {
-        method: "POST",
-        body: data,
-      });
-
-      const checkout = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ size }),
-      });
-
-      const res = await checkout.json();
-
-      if (!res.url) throw new Error("Stripe error");
-
-      window.location.href = res.url;
-    } catch {
-      alert("Payment error");
-      setLoading(false);
-    }
+  if (
+    !form.name ||
+    !form.email ||
+    !form.country ||
+    !form.city ||
+    !form.street ||
+    !form.zip
+  ) {
+    return alert("Please fill shipping address");
   }
+
+  setLoading(true);
+
+  try {
+    const data = new FormData();
+    data.append("photo", photo);
+    data.append("size", size);
+    Object.entries(form).forEach(([k, v]) => data.append(k, v));
+
+    // 1️⃣ SEND EMAIL FIRST
+    const mail = await fetch("/api/send-photo", {
+      method: "POST",
+      body: data,
+    });
+
+    if (!mail.ok) throw new Error("mail failed");
+
+    // 2️⃣ THEN CREATE STRIPE SESSION
+    const checkout = await fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ size }),
+    });
+
+    const res = await checkout.json();
+
+    if (!res.url) throw new Error("stripe error");
+
+    // 3️⃣ ONLY THEN REDIRECT
+    window.location.href = res.url;
+
+  } catch (e) {
+    console.error(e);
+    alert("Order error");
+    setLoading(false);
+  }
+}
+
 
   return (
     <div style={page}>
