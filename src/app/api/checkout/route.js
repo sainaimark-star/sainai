@@ -9,8 +9,12 @@ export async function POST(req) {
 
     const { size } = body;
 
-    // цены в центах
-    const price = size === "A3" ? 3000 : 2000;
+    let price = 2000; // A4 default
+
+if (size === "A3") price = 3000;
+if (size === "A4") price = 2000;
+if (size === "TEST") price = 100; // $1
+
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
