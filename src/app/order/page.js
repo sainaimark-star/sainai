@@ -106,7 +106,7 @@ export default function OrderPage() {
           <option value="">Choose size</option>
           <option value="A3">A3 – $30</option>
           <option value="A4">A4 – $20</option>
-          <option value="TEST">Test – $1</option>
+      
         </select>
 
         <button style={addrBtn} onClick={() => setShowAddress(!showAddress)}>
