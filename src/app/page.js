@@ -1,26 +1,28 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 export default function Home() {
+  const router = useRouter();
+
   return (
     <div style={page}>
       <div style={card}>
-
         <h1 style={title}>Pencil Portraits</h1>
-        <p style={subtitle}>Order your personal portrait from a photo</p>
-<h1 style={title}>Pencil Portraits</h1>
-<p style={subtitle}>Order your personal portrait from a photo</p>
 
-<img
-  src="/avatar.jpg"
-  style={{
-    width: 90,
-    height: 90,
-    borderRadius: "50%",
-    objectFit: "cover",
-    margin: "20px auto",
-    display: "block",
-  }}
-/>
+        <p style={subtitle}>Order your personal portrait from a photo</p>
+
+        <img
+          src="/avatar.jpg"
+          style={{
+            width: 90,
+            height: 90,
+            borderRadius: "50%",
+            objectFit: "cover",
+            margin: "20px auto",
+            display: "block",
+          }}
+        />
 
         <h3>About the artist</h3>
 
@@ -29,13 +31,12 @@ export default function Home() {
           Every portrait is carefully hand-drawn on real paper — not digital.
           My work focuses on realistic and emotional portraits of people and pets.
           Each piece is created individually with attention to detail.
-          You can view examples of my work on Instagram and TikTok.
         </p>
 
-        <div style={list}>
-          ✓ Hand-drawn on real paper<br/>
-          ✓ Worldwide shipping available<br/>
-          ✓ Secure payment via Stripe<br/>
+        <div style={checks}>
+          ✓ Hand-drawn on real paper<br />
+          ✓ Worldwide shipping available<br />
+          ✓ Secure payment via Stripe<br />
           ✓ Personal customer support
         </div>
 
@@ -43,10 +44,9 @@ export default function Home() {
           Your finished portrait will be safely packaged and shipped directly to your address.
         </p>
 
-        <button style={button} onClick={() => window.location.href="/order"}>
+        <button style={button} onClick={() => router.push("/order")}>
           Order your portrait
         </button>
-
       </div>
     </div>
   );
@@ -64,53 +64,44 @@ const page = {
 
 const card = {
   maxWidth: 420,
-  padding: 40,
-  textAlign: "center",
+  padding: 30,
   color: "white",
+  textAlign: "center",
 };
 
 const title = {
-  fontSize: 36,
+  fontSize: 38,
   marginBottom: 10,
 };
 
 const subtitle = {
-  opacity: 0.8,
-  marginBottom: 20,
-};
-
-const avatar = {
-  width: 120,
-  height: 120,
-  borderRadius: "50%",
-  margin: "20px auto",
-  objectFit: "cover",
+  opacity: 0.7,
 };
 
 const text = {
-  fontSize: 14,
-  lineHeight: "1.6",
-  opacity: 0.85,
+  opacity: 0.8,
+  lineHeight: 1.6,
 };
 
-const list = {
+const checks = {
   marginTop: 20,
-  lineHeight: "1.8",
+  lineHeight: 2,
 };
 
 const footer = {
   marginTop: 20,
-  fontSize: 13,
-  opacity: 0.7,
+  opacity: 0.6,
 };
 
 const button = {
   marginTop: 30,
   width: "100%",
   padding: 16,
-  fontSize: 16,
   background: "white",
+  color: "black",
   border: "none",
   borderRadius: 12,
+  fontSize: 16,
+  fontWeight: "bold",
   cursor: "pointer",
 };
