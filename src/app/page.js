@@ -1,128 +1,116 @@
-export default function HomePage() {
-  return (
-    <main style={wrapper}>
-      <div style={card}>
-        <h1 style={title}>Pencil Portraits</h1>
+"use client";
 
-        <p style={subtitle}>
-          Hand-drawn pencil portraits from your photo.
-          Simple. Elegant. Personal.
+export default function Home() {
+  return (
+    <div style={page}>
+      <div style={card}>
+
+        <h1 style={title}>Pencil Portraits</h1>
+        <p style={subtitle}>Order your personal portrait from a photo</p>
+<h1 style={title}>Pencil Portraits</h1>
+<p style={subtitle}>Order your personal portrait from a photo</p>
+
+<img
+  src="/avatar.jpg"
+  style={{
+    width: 90,
+    height: 90,
+    borderRadius: "50%",
+    objectFit: "cover",
+    margin: "20px auto",
+    display: "block",
+  }}
+/>
+
+        <h3>About the artist</h3>
+
+        <p style={text}>
+          I am a professional pencil artist with over <b>10 years of experience</b>.
+          Every portrait is carefully hand-drawn on real paper — not digital.
+          My work focuses on realistic and emotional portraits of people and pets.
+          Each piece is created individually with attention to detail.
+          You can view examples of my work on Instagram and TikTok.
         </p>
 
-        {/* ABOUT */}
-
-        <div style={about}>
-          <h2 style={sectionTitle}>About the artist</h2>
-
-          <p>
-            I am a professional pencil artist with over <strong>10 years of experience</strong>.
-            Every portrait is carefully hand-drawn on real paper — not digital.
-          </p>
-
-          <p>
-            My work focuses on realistic and emotional portraits of people and pets.
-            Each piece is created individually with attention to detail.
-          </p>
-
-          <p>
-            You can view examples of my work on Instagram and TikTok.
-          </p>
+        <div style={list}>
+          ✓ Hand-drawn on real paper<br/>
+          ✓ Worldwide shipping available<br/>
+          ✓ Secure payment via Stripe<br/>
+          ✓ Personal customer support
         </div>
 
-        {/* TRUST */}
-
-        <div style={trust}>
-          ✔ Hand-drawn on real paper<br />
-          ✔ Worldwide shipping available<br />
-          ✔ Secure payment via Stripe<br />
-          ✔ Personal customer support
-        </div>
-
-        <p style={shipping}>
+        <p style={footer}>
           Your finished portrait will be safely packaged and shipped directly to your address.
         </p>
 
-        {/* ORDER BUTTON AT BOTTOM */}
+        <button style={button} onClick={() => window.location.href="/order"}>
+          Order your portrait
+        </button>
 
-        <a href="/order">
-          <button style={button}>Order your portrait</button>
-        </a>
       </div>
-    </main>
+    </div>
   );
 }
 
-/* STYLES */
+/* styles */
 
-const wrapper = {
+const page = {
   minHeight: "100vh",
-  background: "radial-gradient(circle at top,#1b1b1b 0%,#0b0b0b 70%)",
+  background: "#000",
   display: "flex",
-  alignItems: "center",
   justifyContent: "center",
-  padding: "30px",
-  fontFamily: "system-ui",
-  color: "#eaeaea",
+  alignItems: "center",
 };
 
 const card = {
-  maxWidth: "560px",
-  width: "100%",
-  background: "#111",
-  padding: "50px",
-  borderRadius: "22px",
+  maxWidth: 420,
+  padding: 40,
   textAlign: "center",
-  boxShadow: "0 0 0 1px rgba(255,255,255,.05), 0 40px 90px rgba(0,0,0,.8)",
-};
-
-const title = {
-  fontSize: "36px",
-  marginBottom: "12px",
   color: "white",
 };
 
+const title = {
+  fontSize: 36,
+  marginBottom: 10,
+};
+
 const subtitle = {
-  color: "#b5b5b5",
+  opacity: 0.8,
+  marginBottom: 20,
+};
+
+const avatar = {
+  width: 120,
+  height: 120,
+  borderRadius: "50%",
+  margin: "20px auto",
+  objectFit: "cover",
+};
+
+const text = {
+  fontSize: 14,
   lineHeight: "1.6",
-  marginBottom: "32px",
+  opacity: 0.85,
 };
 
-const sectionTitle = {
-  fontSize: "18px",
-  marginBottom: "12px",
-  color: "#fff",
+const list = {
+  marginTop: 20,
+  lineHeight: "1.8",
 };
 
-const about = {
-  textAlign: "left",
-  fontSize: "14px",
-  lineHeight: "1.7",
-  color: "#cfcfcf",
-  marginBottom: "28px",
-};
-
-const trust = {
-  marginBottom: "18px",
-  color: "#9f9f9f",
-  fontSize: "14px",
-  lineHeight: "1.7",
-};
-
-const shipping = {
-  fontSize: "13px",
-  color: "#8a8a8a",
-  marginBottom: "28px",
+const footer = {
+  marginTop: 20,
+  fontSize: 13,
+  opacity: 0.7,
 };
 
 const button = {
+  marginTop: 30,
   width: "100%",
-  padding: "18px",
-  borderRadius: "14px",
+  padding: 16,
+  fontSize: 16,
+  background: "white",
   border: "none",
-  background: "linear-gradient(135deg,#fff,#d6d6d6)",
-  color: "#0e0e0e",
-  fontSize: "16px",
-  fontWeight: "600",
+  borderRadius: 12,
   cursor: "pointer",
-  boxShadow: "0 10px 30px rgba(255,255,255,.18)",
 };
